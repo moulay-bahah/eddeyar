@@ -84,8 +84,21 @@ export default function FormSearch({
   useEffect(() => {
     fetch(typeAnnoncesEndpoint)
       .then((res) => res.json())
-      .then((data) => setTypeAnnonces(data))
-      .catch((err) => console.error("Error fetching typeAnnonces:", err));
+      .then((data) => {
+        if (data?.ok === false || data?.error) {
+          console.error("Error fetching typeAnnonces:", data.error);
+          setTypeAnnonces([]);
+        } else if (Array.isArray(data)) {
+          setTypeAnnonces(data);
+        } else {
+          console.warn("Unexpected typeAnnonces data format:", data);
+          setTypeAnnonces([]);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching typeAnnonces:", err);
+        setTypeAnnonces([]);
+      });
   }, [typeAnnoncesEndpoint]);
 
   // categories
@@ -94,12 +107,23 @@ export default function FormSearch({
       fetch(`${categoriesEndpoint}?parentId=${selectedTypeId}`)
         .then((res) => res.json())
         .then((data) => {
-          setCategories(data);
+          if (data?.ok === false || data?.error) {
+            console.error("Error fetching categories:", data.error);
+            setCategories([]);
+          } else if (Array.isArray(data)) {
+            setCategories(data);
+          } else {
+            console.warn("Unexpected categories data format:", data);
+            setCategories([]);
+          }
           setSubCategories([]);
           setSelectedCategoryId("");
           setSelectedSubCategoryId("");
         })
-        .catch((err) => console.error("Error fetching categories:", err));
+        .catch((err) => {
+          console.error("Error fetching categories:", err);
+          setCategories([]);
+        });
     } else {
       setCategories([]);
       setSubCategories([]);
@@ -113,8 +137,21 @@ export default function FormSearch({
     if (selectedCategoryId) {
       fetch(`${subCategoriesEndpoint}?parentId=${selectedCategoryId}`)
         .then((res) => res.json())
-        .then((data) => setSubCategories(data))
-        .catch((err) => console.error("Error fetching subcategories:", err));
+        .then((data) => {
+          if (data?.ok === false || data?.error) {
+            console.error("Error fetching subcategories:", data.error);
+            setSubCategories([]);
+          } else if (Array.isArray(data)) {
+            setSubCategories(data);
+          } else {
+            console.warn("Unexpected subcategories data format:", data);
+            setSubCategories([]);
+          }
+        })
+        .catch((err) => {
+          console.error("Error fetching subcategories:", err);
+          setSubCategories([]);
+        });
     } else {
       setSubCategories([]);
       setSelectedSubCategoryId("");
@@ -125,8 +162,23 @@ export default function FormSearch({
   useEffect(() => {
     fetch(`${lieuxEndpoint}?tag=wilaya`)
       .then((res) => res.json())
-      .then((data) => setWilayas(Array.isArray(data?.data) ? data.data : data))
-      .catch((err) => console.error("Error fetching wilayas:", err));
+      .then((data) => {
+        if (data?.ok === false || data?.error) {
+          console.error("Error fetching wilayas:", data.error);
+          setWilayas([]);
+        } else if (Array.isArray(data?.data)) {
+          setWilayas(data.data);
+        } else if (Array.isArray(data)) {
+          setWilayas(data);
+        } else {
+          console.warn("Unexpected wilayas data format:", data);
+          setWilayas([]);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching wilayas:", err);
+        setWilayas([]);
+      });
   }, [lieuxEndpoint]);
 
   // 👇 moughataas quand wilaya sélectionnée
@@ -139,7 +191,17 @@ export default function FormSearch({
     fetch(`${lieuxEndpoint}?parentId=${encodeURIComponent(selectedWilayaId)}&tag=moughataa`)
       .then((res) => res.json())
       .then((data) => {
-        setMoughataas(Array.isArray(data?.data) ? data.data : data);
+        if (data?.ok === false || data?.error) {
+          console.error("Error fetching moughataas:", data.error);
+          setMoughataas([]);
+        } else if (Array.isArray(data?.data)) {
+          setMoughataas(data.data);
+        } else if (Array.isArray(data)) {
+          setMoughataas(data);
+        } else {
+          console.warn("Unexpected moughataas data format:", data);
+          setMoughataas([]);
+        }
         setSelectedMoughataaId("");
       })
       .catch((err) => {

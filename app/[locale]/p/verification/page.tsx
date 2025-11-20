@@ -1,5 +1,7 @@
 import { MailCheck } from "lucide-react";
 
+
+
 export default function VerificationPage() {
   return (
     <div className="min-h-screen flex items-center justify-center  to-indigo-900 px-4">

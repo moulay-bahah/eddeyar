@@ -29,6 +29,7 @@ export default async function Home({
   params: Promise<Params>;
   searchParams?: Promise<Search>;
 }) {
+  console.log("DATABASE_URL", process.env.DATABASE_URL);
   const { locale } = await params;
   const sp = (await searchParams) ?? {};
   const t = await getI18n();

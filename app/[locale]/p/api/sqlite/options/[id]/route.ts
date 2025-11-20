@@ -10,7 +10,7 @@ export async function GET(
     const { id } = await params;
     console.log("id", id);
     if (!id) {
-      return new NextResponse("Champs obligatoires manquants", { status: 400 });
+      return NextResponse.json({ ok: false, error: "Champs obligatoires manquants" }, { status: 400 });
     }
     const db = new Database("database.db");
     const option = db.prepare("SELECT * FROM options WHERE id = ?").get(id);
@@ -20,6 +20,6 @@ export async function GET(
     return NextResponse.json(option, { status: 200 });
   } catch (error) {
     console.log(error);
-    return new NextResponse("Erreur serveur", { status: 500 });
+    return NextResponse.json({ ok: false, error: "Erreur serveur" }, { status: 500 });
   }
 }

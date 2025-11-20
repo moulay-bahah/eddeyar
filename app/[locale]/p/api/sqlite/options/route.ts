@@ -25,6 +25,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(rows);
   } catch (error) {
     console.log(error);
-    return new NextResponse("Erreur serveur", { status: 500 });
+    return NextResponse.json({ ok: false, error: "Erreur serveur" }, { status: 500 });
   }
 }

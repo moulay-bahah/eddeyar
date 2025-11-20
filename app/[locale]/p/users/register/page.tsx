@@ -1,5 +1,5 @@
 import RegisterForm from "./RegisterForm";
-import RegisterFormNumber from "./RegisterFormNumber";
+import RegisterFormNumber from "./RegisterFormPhone";
 
 export default async function RegisterPage(props: {
   params: Promise<{ locale: string }>;
@@ -7,5 +7,5 @@ export default async function RegisterPage(props: {
   const params = await props.params;
   console.log("local cote server");
   console.log("parmas test", params.locale);
-  return <RegisterFormNumber lang={params.locale} urlboot={`/${params.locale}/api/telegram`} />;
+  return <RegisterForm lang={params.locale} urlboot={`/${params.locale}/api/telegram`} />;
 }

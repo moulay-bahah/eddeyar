@@ -3,12 +3,15 @@ import { turso } from "../tursoClient";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
     if (!id) {
-      return new NextResponse("Champs obligatoires manquants", { status: 400 });
+      return NextResponse.json(
+        { ok: false, error: "Champs obligatoires manquants" },
+        { status: 400 }
+      );
     }
 
     const result = await turso.execute("SELECT * FROM options WHERE id = ?", [
@@ -18,6 +21,10 @@ export async function GET(
 
     return NextResponse.json(option, { status: 200 });
   } catch (error) {
-    return new NextResponse("Erreur serveur", { status: 500 });
+    console.error("options by id GET error:", error);
+    return NextResponse.json(
+      { ok: false, error: "Erreur serveur" },
+      { status: 500 }
+    );
   }
 }

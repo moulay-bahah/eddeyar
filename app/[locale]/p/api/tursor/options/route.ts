@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     let rows;
     if (parentId === null) {
       const result = await turso.execute(
-        "SELECT * FROM options WHERE depth = 1",
+        "SELECT * FROM options WHERE depth = 1"
       );
       rows = result.rows;
     }
@@ -17,12 +17,16 @@ export async function GET(request: NextRequest) {
     if (parentId !== null) {
       const result = await turso.execute(
         "SELECT * FROM options WHERE parentID = ?",
-        [parentId],
+        [parentId]
       );
       rows = result.rows;
     }
     return NextResponse.json(rows);
   } catch (error) {
-    return new NextResponse("Erreur serveur", { status: 500 });
+    console.error("options GET error:", error);
+    return NextResponse.json(
+      { ok: false, error: "Erreur serveur" },
+      { status: 500 }
+    );
   }
 }

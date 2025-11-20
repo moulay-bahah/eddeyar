@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useI18n } from "../../../../../locales/client";
 import axios from "axios";
 
-export default function RegisterForm({ lang = "ar" , urlboot}: { lang?: string; urlboot: string }) {
+export default function RegisterFormEmail({ lang = "ar" , urlboot}: { lang?: string; urlboot: string }) {
   const router = useRouter();
   const t = useI18n();
 
@@ -12,7 +12,7 @@ export default function RegisterForm({ lang = "ar" , urlboot}: { lang?: string; 
   // const [userType, setUserType] = useState<"individual" | "company">("individual");
   const [samsar, setSamsar] = useState<boolean>(false);
 
-
+  
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
@@ -86,12 +86,7 @@ export default function RegisterForm({ lang = "ar" , urlboot}: { lang?: string; 
   };
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          {t("register.title")}
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
           
           {/* EMAIL */}
           <div>
@@ -197,8 +192,6 @@ export default function RegisterForm({ lang = "ar" , urlboot}: { lang?: string; 
               </p>
             )}
           </div>
-        </form>
-      </div>
-    </main>
+    </form>
   );
 }
