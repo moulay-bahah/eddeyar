@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
 
-export default function VerifyOtpPage({ lang = "ar", urlboot }: { lang?: string; urlboot: string }) {
+export default function VerifyOtpPage() {
+  const params = useParams();
+  const lang = (params?.locale as string) || "ar";
   const [userId, setUserId] = useState<string | null>(null);
   const [otp, setOtp] = useState("");
   const [msg, setMsg] = useState("");
