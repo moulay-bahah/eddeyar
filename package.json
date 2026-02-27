@@ -87,5 +87,5 @@
     "tsx": "^4.20.4",
     "typescript": "^5.9.2"
   },
-  "packageManager": "pnpm@10.15.0"
+  "packageManager": "bun@latest"
 }
